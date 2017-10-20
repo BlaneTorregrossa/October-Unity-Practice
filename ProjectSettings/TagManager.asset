@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
+  - Projectile
+  - East Wall
+  - West Wall
+  - North Wall
+  - South Wall
   layers:
   - Default
   - TransparentFX

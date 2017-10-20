@@ -5,46 +5,82 @@ using UnityEngine;
 public class FireProjectileBehavior : MonoBehaviour
 {
     public GameObject Spawner;
-    public GameObject projectile;
+    public GameObject NewProjectile;
+    public GameObject projectileObject;
     public Transform projectileTransform;
+
     public FireBall fireBall;
     public GameObject Player;
 
-    protected GameObject NewProjectile;
+    //public int projectileCounter;
 
-    private float time;
-    private int projectileCounter;
+    private bool projectileStillPresent;
+    private Vector3 Direction;
+    private float SpawnPos;
+    private string lastFired;
 
 
-    void Start ()
+    void Start()
     {
-        projectileCounter = 0;
-        projectile.transform.localScale = new Vector3(1, 1, 1);
-	}
-	
-	void Update ()
+        //projectileCounter = 0;
+        projectileObject.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    void Update()
     {
-        time = UnityEngine.Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Spawn();
-            Debug.Log("A projectile was fired!");
+            lastFired = "F";
+            SpawnA();
+            SpawnPos = Random.Range(-50f, 50f);
+            //projectileCounter++;
+            Debug.Log("A projectile type A was fired!");
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            lastFired = "E";
+            SpawnB();
+            SpawnPos = Random.Range(-50f, 50f);
+            //projectileCounter++;
+            Debug.Log("A projectile type B was fired!");
         }
 
 
-        NewProjectile.transform.position -= (Player.transform.position + new Vector3(-0.05f, 0, 0)) * fireBall.speed;
-        
-    }
+        if (lastFired == "F")
+        {
+            projectileObject.transform.position = new Vector3(projectileObject.transform.position.x - 1, 0, SpawnPos);
+            projectileObject.transform.position -= Spawner.transform.position * 0.02f;
+        }
 
-    void Spawn()
+        if (lastFired == "E")
+        {
+            projectileObject.transform.position = new Vector3(SpawnPos, 0, projectileObject.transform.position.z - 1);
+            projectileObject.transform.position -= Spawner.transform.position * 0.02f;
+        }
+
+    }
+  
+    void SpawnA()
     {
-        projectileCounter++;
-        NewProjectile = Instantiate(projectile, projectileTransform.transform.position, projectileTransform.transform.rotation);
-        NewProjectile.transform.position += transform.forward + transform.up;
-        fireBall.speed = Random.Range(0.1f, 0.9f);
-        fireBall.scale = Random.Range(0.01f, 0.09f);
-        projectile.transform.localScale += new Vector3(fireBall.scale, 0, fireBall.scale);
+        projectileObject = NewProjectile;
+        projectileTransform = NewProjectile.GetComponent<Transform>();
+
+        projectileObject = Instantiate(projectileObject, NewProjectile.transform.position, NewProjectile.transform.rotation);
+        fireBall.scale = Random.Range(0.01f, 1.25f);
+        projectileObject.transform.localScale += new Vector3(fireBall.scale, 0, fireBall.scale);
     }
 
-    
+
+    void SpawnB()
+    {
+        projectileObject = NewProjectile;
+        projectileTransform = NewProjectile.GetComponent<Transform>();
+
+        projectileObject = Instantiate(projectileObject, NewProjectile.transform.position, NewProjectile.transform.rotation);
+        fireBall.scale = Random.Range(0.01f, 1.25f);
+        projectileObject.transform.localScale += new Vector3(fireBall.scale, 0, fireBall.scale);
+    }
+
+
 }
