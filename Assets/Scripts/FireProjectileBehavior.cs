@@ -12,17 +12,13 @@ public class FireProjectileBehavior : MonoBehaviour
     public FireBall fireBall;
     public GameObject Player;
 
-    //public int projectileCounter;
-
     private bool projectileStillPresent;
-    private Vector3 Direction;
     private float SpawnPos;
     private string lastFired;
 
 
     void Start()
     {
-        //projectileCounter = 0;
         projectileObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
@@ -33,7 +29,6 @@ public class FireProjectileBehavior : MonoBehaviour
             lastFired = "F";
             SpawnA();
             SpawnPos = Random.Range(-50f, 50f);
-            //projectileCounter++;
             Debug.Log("A projectile type A was fired!");
         }
 
@@ -42,7 +37,6 @@ public class FireProjectileBehavior : MonoBehaviour
             lastFired = "E";
             SpawnB();
             SpawnPos = Random.Range(-50f, 50f);
-            //projectileCounter++;
             Debug.Log("A projectile type B was fired!");
         }
 
